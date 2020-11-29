@@ -1,0 +1,13 @@
+#display {
+  text-align: right;
+}
+
+#buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#zero {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
