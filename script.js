@@ -28,7 +28,7 @@ function operate(firstVar, secondVar, operation) {
   }
 }
 
-let buttonArray = document.querySelectorAll('.button');
+let buttonArray = document.querySelectorAll('button');
 let equalsButton = document.getElementById('equals');
 let displayDiv = document.getElementById('display');
 let operator = '';
@@ -55,7 +55,7 @@ buttonArray.forEach(button => button.addEventListener('click', function(){
 equalsButton.addEventListener('click', function() {
   if (firstVar.length > 0 && secondVar.length > 0) {
     
-    let solution = operate(parseInt(firstVar), parseInt(secondVar), operator);
+    let solution = operate(parseFloat(firstVar), parseFloat(secondVar), operator);
     displayDiv.textContent = solution;
     console.log(solution);
     
