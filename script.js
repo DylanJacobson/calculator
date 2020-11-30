@@ -56,6 +56,8 @@ buttonArray.forEach(button => button.addEventListener('click', function(){
         secondVar += button.textContent; 
       }
     }
+  } else if (button.id === 'clear'){
+    clearVariables();
   }
   displayDiv.textContent = firstVar + operator + secondVar;
 }))
