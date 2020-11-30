@@ -1,5 +1,3 @@
-//TODO: Clear button doesn't fully clear, split into "clear" and "all clear"?
-
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
