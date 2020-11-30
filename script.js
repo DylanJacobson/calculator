@@ -1,98 +1,147 @@
-function add(firstVar, secondVar) {
-  return firstVar + secondVar;
-}
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => a / b;
 
-function subtract(firstVar, secondVar) {
-  return firstVar - secondVar;
-}
+const working = document.querySelector("#working");
+const storage = document.querySelector("#storage");
 
-function multiply(firstVar, secondVar) {
-  return firstVar * secondVar;
-}
+let hasSolved = false;
+let hasOperator = false;
+let firstNum = "";
+let secondNum = "";
+let firstNumMode = true;
 
-function divide(firstVar, secondVar) {
-  return firstVar / secondVar;
-}
-
-function operate(firstVar, secondVar, operation) {
-  switch (operation) {
-    case '+':
-      return add(firstVar, secondVar);
-    case '-':
-      return subtract(firstVar, secondVar);
-    case 'x':
-      return multiply(firstVar, secondVar);
-    case '/':
-      return divide(firstVar, secondVar);
+function operate(operator, firstNum, secondNum) {
+  firstNum = parseFloat(firstNum);
+  secondNum = parseFloat(secondNum);
+  hasSolved = true;
+  if (operator === "+") {
+    return add(firstNum, secondNum);
+  } else if (operator === "-") {
+    return subtract(firstNum, secondNum);
+  } else if (operator === "x") {
+    return multiply(firstNum, secondNum);
+  } else if (operator === "÷") {
+    return divide(firstNum, secondNum);
   }
 }
 
-function clearVariables() {
-  operator = '';
-  firstVarMode = true;
-  firstVar = '';
-  secondVar = '';
-}
-
-function processNumbers(buttonText, currentVar) {
-  if ((buttonText === '.' && currentVar.includes('.')) ||
-      (currentVar.length === 6)) {
-    // keeps user from entering a second decimal to a variable
-    return '';
-  } else {
-    return buttonText;
-  }
-}
-
-function solve() {
-  if (operator === '/' && secondVar == 0) {
-    activeDisplayDiv.innerHTML = '<a href="https://en.wikipedia.org/wiki/Division_by_zero">You can\'t divide by zero!</a>';
-    clearVariables();
-  }
-  if (firstVar.length > 0 && secondVar.length > 0) {
-    
-    let solution = operate(parseFloat(firstVar), parseFloat(secondVar), operator);
-    activeDisplayDiv.textContent = solution;
-    
-    clearVariables();
-
-    firstVar = solution.toString();
-  }
-}
-
-function moveActiveToStorage() {
-  storageDisplayDiv.textContent = activeDisplayDiv.textContent; 
-}
-
-let buttonArray = document.querySelectorAll('button');
-let equalsButton = document.getElementById('equals');
-let storageDisplayDiv = document.getElementById('storage');
-let activeDisplayDiv = document.getElementById('active');
-let operator = '';
-let firstVarMode = true;
-let firstVar = '';
-let secondVar = '';
-
-buttonArray.forEach(button => button.addEventListener('click', function(){
-  if (button.classList.contains('operator')) {
-    if (operator === '' && firstVar.length > 0) {
-      operator = button.textContent;
-      firstVarMode = false;
-    } else if (operator.length === 1 && secondVar.length > 0) {
-      solve();
-      operator = button.textContent;
-      firstVarMode = false;
-    }
-  } else if (button.classList.contains('number')) {
-    if (firstVarMode) {
-      firstVar += processNumbers(button.textContent, firstVar);
+function addChar(char) {
+  if (firstNumMode) {
+    if (char === "." && firstNum.includes(char)) {
+      // do nothing
     } else {
-      secondVar += processNumbers(button.textContent, secondVar);
+      if (firstNum.length < 18) {
+        firstNum += char;
+      }
+      updateDisplay();
     }
-  } else if (button.id === 'clear'){
-    clearVariables();
-  }
-  activeDisplayDiv.textContent = firstVar + operator + secondVar;
-}))
+  } else {
+    if (hasOperator) {
+      if (char === "." && secondNum.includes(char)) {
+        // do nothing
+      } else {
+        if (secondNum.length < 18) {
+          secondNum += char;
+        }
 
-equalsButton.addEventListener('click', solve)
+        updateDisplay();
+      }
+    }
+  }
+}
+
+function updateDisplay() {
+  if (firstNumMode) {
+    working.textContent = firstNum;
+  } else {
+    working.textContent = secondNum;
+  }
+}
+
+let operator = "";
+function addOperator() {
+  console.log("add operator");
+  hasSolved = false;
+  if (!hasOperator) {
+    firstNumMode = false;
+    hasOperator = true;
+    operator = this.textContent;
+    //updateDisplay();
+    storage.textContent = `${firstNum} ${operator}`;
+    working.textContent = 0;
+  }
+}
+
+function clear(displayVal) {
+  operator = "";
+  hasOperator = false;
+  working.textContent = displayVal;
+  hasSolved = false;
+  firstNum = "";
+  secondNum = "";
+  firstNumMode = true;
+}
+
+const display = document.querySelector("#display");
+
+const keypad = document.createElement("div");
+keypad.style.display = "grid";
+keypad.style.gridTemplateColumns = "repeat(3, 1fr)";
+keypad.style.gridTemplateRows = "repeat(5, 1fr)";
+keypad.style.width = "150px";
+keypad.style.margin = "auto";
+
+let numKeys = Array.from(document.querySelectorAll(".numkey"));
+for (let i = 0; i < numKeys.length; i++) {
+  numKeys[i].addEventListener("click", function () {
+    if (!hasSolved) {
+      addChar(this.textContent);
+    } else {
+      clear(this.textContent);
+      addChar(this.textContent);
+    }
+  });
+}
+
+const decimalKey = document.querySelector("#decimal");
+decimalKey.addEventListener("click", function () {
+  if (!hasSolved) {
+    addChar(this.textContent);
+  }
+});
+
+let operateKeys = Array.from(document.querySelectorAll(".operator"));
+for (let j = 0; j < operateKeys.length; j++) {
+  operateKeys[j].addEventListener("click", addOperator);
+}
+
+const eqKey = document.querySelector("#equals");
+eqKey.addEventListener("click", function () {
+  if (hasOperator && secondNum != "") {
+    hasOperator = false;
+    let solution = operate(operator, firstNum, secondNum);
+
+    if (solution.toString().length > 19) {
+      try {
+        solution = solution.toFixed(19 - Math.trunc(solution));
+        firstNum = solution;
+      } catch (err) {
+        solution = "ERROR";
+        clear(solution);
+        console.log(err);
+      }
+    } else {
+      firstNum = solution;
+    }
+    secondNum = "";
+    working.textContent = solution;
+    storage.textContent = "";
+  }
+});
+
+const clearKey = document.querySelector("#clear");
+clearKey.addEventListener("click", function () {
+  clear("0");
+});

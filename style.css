@@ -12,18 +12,20 @@
   border-bottom: 1px black solid;
 }
 
-#active {
+#working {
   height: 1.5em;
 }
 
 #buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2px;
 }
 
 button {
   height: 50px;
   font-size: 18px;
+  margin: 0px;
 }
 
 #zero {
