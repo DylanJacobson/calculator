@@ -1,23 +1,35 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>JS Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
   </head>
   <body>
-    <div id="calculator">
+    <div class="calculator">
       <div id="display">
         <div id="storage"></div>
-        <div id="working"></div>
+        <div id="working">0</div>
       </div>
-      <div id="buttons">
-        <button id="clear">AC</button><button id="positive">+/-</button><button id="equals">=</button>
-        <button class="numkey">7</button><button class="numkey">8</button><button class="numkey">9</button>
-        <button id="divide" class="operator">/</button>
-        <button class="numkey">4</button><button class="numkey">5</button><button class="numkey">6</button>
-        <button id="multiply" class="operator">x</button>
-        <button class="numkey">1</button><button class="numkey">2</button><button class="numkey">3</button>
-        <button id="subtract" class="operator">-</button>
-        <button id="zero" class="numkey">0</button><button id="decimal">.</button><button id="add" class="operator">+</button>
+      <button id="clear">clear</button>
+      <button id="divide" class="operator">/</button>
+      <button id="multiply" class="operator">x</button>
+      <button class="numkey">7</button>
+      <button class="numkey">8</button>
+      <button class="numkey">9</button>
+      <button id="subtract" class="operator">-</button>
+      <button class="numkey">4</button>
+      <button class="numkey">5</button>
+      <button class="numkey">6</button>
+      <button id="add" class="operator">+</button>
+      <button class="numkey">1</button>
+      <button class="numkey">2</button>
+      <button class="numkey">3</button>
+      <button id="equals">=</button>
+      <button id="zero" class="numkey">0</button>
+      <button id="decimal">.</button>
+      <div id="footer"><a href="https://github.com/DylanJacobson/calculator">View the code for this project on GitHub.</a></div>
     </div>
     <script src="script.js"></script>
   </body>

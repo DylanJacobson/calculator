@@ -1,39 +1,98 @@
-#calculator {
-  width: 200px;
-}
-
-#display {
-  text-align: right;
-  font-family: monospace;
-}
-
-#storage {
-  height: 1em;
-  border-bottom: 1px black solid;
-}
-
-#working {
-  height: 1.5em;
-}
-
-#buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 2px;
+:root {
+  --button-color: #e8e8e8;
+  --special-color: #f05454;
+  --calculator-color: #222831;
+  --display-color: #e8e8e8;
+  --text-color: #30475e;
 }
 
 button {
-  height: 50px;
-  font-size: 18px;
-  margin: 0px;
+  border: 0px;
+  border-radius: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 48px;
+}
+
+button:hover {
+  /*box-shadow: inset 0 0 20px #000000;*/
+  transform: scale(1.1);
+}
+
+.calculator {
+  display: grid;
+  background-color: var(--calculator-color);
+  border: var(--calculator-color) 20px solid;
+  border-radius: 20px;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  width: 500px;
+  height: 600px;
+}
+
+.numkey {
+  background-color: var(--button-color);
+}
+
+.operator {
+  background-color: var(--button-color);
+}
+
+#decimal {
+  background-color: var(--button-color);
 }
 
 #zero {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column: span 2;
 }
 
 #clear {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column: span 2;
+}
+
+#display {
+  display:grid;
+  grid-template-rows: 40px 65px;
+  font-family: 'Open Sans', sans-serif;
+  grid-column: span 4;
+  background-color: var(--display-color);
+  color: #000000;
+  text-align: right;
+  border-radius: 5px;
+}
+
+#storage {
+  border-bottom: 1px #000000 solid;
+  font-size: 26px;
+}
+
+#working {
+  font-size: 46px;
+}
+
+#equals {
+  grid-row: span 2;
+  background-color: var(--special-color);
+  color: white;
+}
+
+#clear {
+  background-color: var(--special-color);
+  color: white;
+}
+
+#footer {
+  grid-column: span 4;
+  text-align: center;
+}
+
+#footer a {
+  color: white;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+#footer a:hover {
+  color: var(--special-color);
 }
