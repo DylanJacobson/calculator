@@ -44,9 +44,17 @@ buttonArray.forEach(button => button.addEventListener('click', function(){
     }
   } else if (button.classList.contains('number')) {
     if (firstVarMode) {
-      firstVar += button.textContent;
+      if (button.textContent === '.' && firstVar.includes('.')) {
+        // do nothing
+      } else {
+        firstVar += button.textContent; 
+      }
     } else {
-      secondVar += button.textContent;
+      if (button.textContent === '.' && secondVar.includes('.')) {
+        // do nothing
+      } else {
+        secondVar += button.textContent; 
+      }
     }
   }
   displayDiv.textContent = firstVar + operator + secondVar;
