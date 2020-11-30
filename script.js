@@ -36,6 +36,10 @@ function numberFunc(buttonText, currentVar) {
 }
 
 function solve() {
+  if (operator === '/' && secondVar == 0) {
+    displayDiv.innerHTML = '<a href="https://en.wikipedia.org/wiki/Division_by_zero">You can\'t divide by zero!</a>';
+    clearVariables();
+  }
   if (firstVar.length > 0 && secondVar.length > 0) {
     
     let solution = operate(parseFloat(firstVar), parseFloat(secondVar), operator);
