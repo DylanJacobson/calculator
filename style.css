@@ -1,15 +1,29 @@
 #calculator {
-  width: 800px;
+  width: 200px;
 }
 
 #display {
   text-align: right;
+  font-family: monospace;
+}
+
+#storage {
+  height: 1em;
+  border-bottom: 1px black solid;
+}
+
+#active {
   height: 1.5em;
 }
 
 #buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+}
+
+button {
+  height: 50px;
+  font-size: 18px;
 }
 
 #zero {

@@ -27,8 +27,17 @@ function operate(firstVar, secondVar, operation) {
   }
 }
 
-function numberFunc(buttonText, currentVar) {
-  if (buttonText === '.' && currentVar.includes('.')) {
+function clearVariables() {
+  operator = '';
+  firstVarMode = true;
+  firstVar = '';
+  secondVar = '';
+}
+
+function processNumbers(buttonText, currentVar) {
+  if ((buttonText === '.' && currentVar.includes('.')) ||
+      (currentVar.length === 6)) {
+    // keeps user from entering a second decimal to a variable
     return '';
   } else {
     return buttonText;
@@ -37,13 +46,13 @@ function numberFunc(buttonText, currentVar) {
 
 function solve() {
   if (operator === '/' && secondVar == 0) {
-    displayDiv.innerHTML = '<a href="https://en.wikipedia.org/wiki/Division_by_zero">You can\'t divide by zero!</a>';
+    activeDisplayDiv.innerHTML = '<a href="https://en.wikipedia.org/wiki/Division_by_zero">You can\'t divide by zero!</a>';
     clearVariables();
   }
   if (firstVar.length > 0 && secondVar.length > 0) {
     
     let solution = operate(parseFloat(firstVar), parseFloat(secondVar), operator);
-    displayDiv.textContent = solution;
+    activeDisplayDiv.textContent = solution;
     
     clearVariables();
 
@@ -51,9 +60,14 @@ function solve() {
   }
 }
 
+function moveActiveToStorage() {
+  storageDisplayDiv.textContent = activeDisplayDiv.textContent; 
+}
+
 let buttonArray = document.querySelectorAll('button');
 let equalsButton = document.getElementById('equals');
-let displayDiv = document.getElementById('display');
+let storageDisplayDiv = document.getElementById('storage');
+let activeDisplayDiv = document.getElementById('active');
 let operator = '';
 let firstVarMode = true;
 let firstVar = '';
@@ -71,21 +85,14 @@ buttonArray.forEach(button => button.addEventListener('click', function(){
     }
   } else if (button.classList.contains('number')) {
     if (firstVarMode) {
-      firstVar += numberFunc(button.textContent, firstVar);
+      firstVar += processNumbers(button.textContent, firstVar);
     } else {
-      secondVar += numberFunc(button.textContent, secondVar);
+      secondVar += processNumbers(button.textContent, secondVar);
     }
   } else if (button.id === 'clear'){
     clearVariables();
   }
-  displayDiv.textContent = firstVar + operator + secondVar;
+  activeDisplayDiv.textContent = firstVar + operator + secondVar;
 }))
 
 equalsButton.addEventListener('click', solve)
-
-function clearVariables() {
-  operator = '';
-  firstVarMode = true;
-  firstVar = '';
-  secondVar = '';
-}
