@@ -24,7 +24,7 @@ function operate(operator, firstNum, secondNum) {
     return subtract(firstNum, secondNum);
   } else if (operator === "x") {
     return multiply(firstNum, secondNum);
-  } else if (operator === "÷") {
+  } else if (operator === "/") {
     return divide(firstNum, secondNum);
   }
 }
@@ -47,7 +47,6 @@ function addChar(char) {
         if (secondNum.length < 18) {
           secondNum += char;
         }
-
         updateDisplay();
       }
     }
@@ -76,9 +75,18 @@ function addOperator() {
 }
 
 function clear(displayVal) {
+  if (firstNumMode) {
+    firstNum = "";
+  } else {
+    secondNum = "";
+  }
+}
+
+function allclear(displayVal) {
   operator = "";
   hasOperator = false;
   working.textContent = displayVal;
+  storage.textContent = "";
   hasSolved = false;
   firstNum = "";
   secondNum = "";
@@ -100,7 +108,7 @@ for (let i = 0; i < numKeys.length; i++) {
     if (!hasSolved) {
       addChar(this.textContent);
     } else {
-      clear(this.textContent);
+      allclear(this.textContent);
       addChar(this.textContent);
     }
   });
@@ -123,14 +131,14 @@ eqKey.addEventListener("click", function () {
   if (hasOperator && secondNum != "") {
     hasOperator = false;
     let solution = operate(operator, firstNum, secondNum);
-
+    
     if (solution.toString().length > 19) {
       try {
         solution = solution.toFixed(19 - Math.trunc(solution));
         firstNum = solution;
       } catch (err) {
         solution = "ERROR";
-        clear(solution);
+        allclear(solution);
         console.log(err);
       }
     } else {
@@ -142,7 +150,13 @@ eqKey.addEventListener("click", function () {
   }
 });
 
-const clearKey = document.querySelector("#clear");
-clearKey.addEventListener("click", function () {
-  clear("0");
+const allClearKey = document.querySelector("#allclear");
+allClearKey.addEventListener("click", function () {
+  allclear("0");
 });
+
+const clearKey = document.querySelector("#clear");
+clearKey.addEventListener("click", function(){
+  clear("0");
+  updateDisplay();
+})

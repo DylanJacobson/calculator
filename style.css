@@ -48,8 +48,10 @@ button:hover {
   grid-column: span 2;
 }
 
-#clear {
-  grid-column: span 2;
+#clear, #allclear {
+  /* grid-column: span 2; */
+  background-color: var(--special-color);
+  color: white;
 }
 
 #display {
@@ -74,11 +76,6 @@ button:hover {
 
 #equals {
   grid-row: span 2;
-  background-color: var(--special-color);
-  color: white;
-}
-
-#clear {
   background-color: var(--special-color);
   color: white;
 }
