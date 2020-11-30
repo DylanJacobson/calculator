@@ -15,7 +15,6 @@ function divide(firstVar, secondVar) {
 }
 
 function operate(firstVar, secondVar, operation) {
-  // return window[operation](firstVar, secondVar);
   switch (operation) {
     case '+':
       return add(firstVar, secondVar);
@@ -25,6 +24,26 @@ function operate(firstVar, secondVar, operation) {
       return multiply(firstVar, secondVar);
     case '/':
       return divide(firstVar, secondVar);
+  }
+}
+
+function numberFunc(buttonText, currentVar) {
+  if (buttonText === '.' && currentVar.includes('.')) {
+    return '';
+  } else {
+    return buttonText;
+  }
+}
+
+function solve() {
+  if (firstVar.length > 0 && secondVar.length > 0) {
+    
+    let solution = operate(parseFloat(firstVar), parseFloat(secondVar), operator);
+    displayDiv.textContent = solution;
+    
+    clearVariables();
+
+    firstVar = solution.toString();
   }
 }
 
@@ -38,23 +57,19 @@ let secondVar = '';
 
 buttonArray.forEach(button => button.addEventListener('click', function(){
   if (button.classList.contains('operator')) {
-    if (operator === '') {
+    if (operator === '' && firstVar.length > 0) {
+      operator = button.textContent;
+      firstVarMode = false;
+    } else if (operator.length === 1 && secondVar.length > 0) {
+      solve();
       operator = button.textContent;
       firstVarMode = false;
     }
   } else if (button.classList.contains('number')) {
     if (firstVarMode) {
-      if (button.textContent === '.' && firstVar.includes('.')) {
-        // do nothing
-      } else {
-        firstVar += button.textContent; 
-      }
+      firstVar += numberFunc(button.textContent, firstVar);
     } else {
-      if (button.textContent === '.' && secondVar.includes('.')) {
-        // do nothing
-      } else {
-        secondVar += button.textContent; 
-      }
+      secondVar += numberFunc(button.textContent, secondVar);
     }
   } else if (button.id === 'clear'){
     clearVariables();
@@ -62,16 +77,7 @@ buttonArray.forEach(button => button.addEventListener('click', function(){
   displayDiv.textContent = firstVar + operator + secondVar;
 }))
 
-equalsButton.addEventListener('click', function() {
-  if (firstVar.length > 0 && secondVar.length > 0) {
-    
-    let solution = operate(parseFloat(firstVar), parseFloat(secondVar), operator);
-    displayDiv.textContent = solution;
-    console.log(solution);
-    
-    clearVariables();
-  }
-})
+equalsButton.addEventListener('click', solve)
 
 function clearVariables() {
   operator = '';
