@@ -1,3 +1,5 @@
+//TODO: Clear button doesn't fully clear, split into "clear" and "all clear"?
+
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
@@ -62,9 +64,8 @@ function updateDisplay() {
 
 let operator = "";
 function addOperator() {
-  console.log("add operator");
   hasSolved = false;
-  if (!hasOperator) {
+  if (!hasOperator && firstNum !== '') {
     firstNumMode = false;
     hasOperator = true;
     operator = this.textContent;
