@@ -95,13 +95,6 @@ function allclear(displayVal) {
 
 const display = document.querySelector("#display");
 
-const keypad = document.createElement("div");
-keypad.style.display = "grid";
-keypad.style.gridTemplateColumns = "repeat(3, 1fr)";
-keypad.style.gridTemplateRows = "repeat(5, 1fr)";
-keypad.style.width = "150px";
-keypad.style.margin = "auto";
-
 let numKeys = Array.from(document.querySelectorAll(".numkey"));
 for (let i = 0; i < numKeys.length; i++) {
   numKeys[i].addEventListener("click", function () {
