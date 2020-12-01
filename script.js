@@ -27,6 +27,29 @@ function operate(operator, firstNum, secondNum) {
   }
 }
 
+function solve() {
+  if (hasOperator && secondNum != "") {
+    hasOperator = false;
+    let solution = operate(operator, firstNum, secondNum);
+    
+    if (solution.toString().length > 19) {
+      try {
+        solution = solution.toFixed(19 - Math.trunc(solution));
+        firstNum = solution;
+      } catch (err) {
+        solution = "ERROR";
+        allclear(solution);
+        console.log(err);
+      }
+    } else {
+      firstNum = solution;
+    }
+    secondNum = "";
+    working.textContent = solution;
+    storage.textContent = "";
+  }
+}
+
 function addChar(char) {
   if (firstNumMode) {
     if (char === "." && firstNum.includes(char)) {
@@ -60,15 +83,20 @@ function updateDisplay() {
 }
 
 let operator = "";
-function addOperator() {
+function addOperator(operatorInput) {
   hasSolved = false;
   if (!hasOperator && firstNum !== '') {
     firstNumMode = false;
     hasOperator = true;
-    operator = this.textContent;
+    operator = operatorInput;
     //updateDisplay();
     storage.textContent = `${firstNum} ${operator}`;
     working.textContent = 0;
+  } else if (hasOperator && secondNum.length > 0) {
+    // saves operator so it doesn't get lost during solve()
+    let operatorSave = operatorInput;
+    solve();
+    addOperator(operatorSave);
   }
 }
 
@@ -114,32 +142,13 @@ decimalKey.addEventListener("click", function () {
 
 let operateKeys = Array.from(document.querySelectorAll(".operator"));
 for (let j = 0; j < operateKeys.length; j++) {
-  operateKeys[j].addEventListener("click", addOperator);
+  operateKeys[j].addEventListener("click", function(){
+    addOperator(this.textContent);
+  });
 }
 
 const eqKey = document.querySelector("#equals");
-eqKey.addEventListener("click", function () {
-  if (hasOperator && secondNum != "") {
-    hasOperator = false;
-    let solution = operate(operator, firstNum, secondNum);
-    
-    if (solution.toString().length > 19) {
-      try {
-        solution = solution.toFixed(19 - Math.trunc(solution));
-        firstNum = solution;
-      } catch (err) {
-        solution = "ERROR";
-        allclear(solution);
-        console.log(err);
-      }
-    } else {
-      firstNum = solution;
-    }
-    secondNum = "";
-    working.textContent = solution;
-    storage.textContent = "";
-  }
-});
+eqKey.addEventListener("click", solve);
 
 const allClearKey = document.querySelector("#allclear");
 allClearKey.addEventListener("click", function () {
