@@ -28,6 +28,10 @@ function operate(operator, firstNum, secondNum) {
 }
 
 function solve() {
+  if (operator === '/' && secondNum == 0) {
+    allclear();
+    working.innerHTML = '<a href="https://www.mathsisfun.com/numbers/dividing-by-zero.html" target="_blank">You can\'t divide by 0!</a>'
+  }
   if (hasOperator && secondNum != "") {
     hasOperator = false;
     let solution = operate(operator, firstNum, secondNum);
